@@ -11,6 +11,6 @@ public interface ProductCatalougeService {
 	public List<Product> getAllProducts() throws ProductCatalougeServiceException;
 	public Product addNewProduct(Product product) throws ProductCatalougeServiceException;
 	public Product updatedProduct(Product product) throws ProductCatalougeServiceException;
-	public void deleteProduct(String productCode) throws ProductCatalougeServiceException;
+	public Product deleteProduct(String productCode) throws ProductCatalougeServiceException;
 	public List<Product> getAllProductByType(int productTypeCode) throws ProductCatalougeServiceException;
 }

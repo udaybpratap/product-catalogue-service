@@ -41,7 +41,9 @@ public class ProductCatalougeServiceImpl implements ProductCatalougeService{
 
 	@Override
 	public Product deleteProduct(String productCode) throws ProductCatalougeServiceException {
-		return productCatalougeRepository.deleteByProductCode(productCode);
+		Product product = productCatalougeRepository.findByProductCode(productCode);
+		productCatalougeRepository.deleteByProductCode(productCode);
+		return product;
 	}
 
 	@Override

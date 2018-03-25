@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.uday.sapient.productcatalogueservice.exception.ProductCatalougeServiceException;
 import com.uday.sapient.productcatalogueservice.model.Product;
-import com.uday.sapient.productcatalogueservice.model.ProductType;
 import com.uday.sapient.productcatalogueservice.service.ProductCatalougeService;
 
 @RestController
@@ -21,9 +20,15 @@ public class ProductCatalogueController {
 	@Autowired
 	private ProductCatalougeService productCatalougeService;	
 	
+	private Product product;
+	private List<Product> productList;
+	
 	@RequestMapping(value="/products/product/{productCode}", method= RequestMethod.GET)
 	public ResponseEntity<Product> getProduct(@PathVariable("productCode") String productCode) throws ProductCatalougeServiceException{
-		return new ResponseEntity<Product>(productCatalougeService.getProductByCode(productCode), HttpStatus.OK);
+		product = productCatalougeService.getProductByCode(productCode);
+		
+		return (product == null ? new ResponseEntity<Product>(HttpStatus.NOT_FOUND):
+				new ResponseEntity<Product>(product, HttpStatus.OK));
 	}
 	
 	@RequestMapping("/products")
@@ -31,9 +36,13 @@ public class ProductCatalogueController {
 		return new ResponseEntity<List<Product>>(productCatalougeService.getAllProducts(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value= "/products/{productTypeCode}", method= RequestMethod.GET)
+	@RequestMapping(value= "/products/producttype/{productTypeCode}", method= RequestMethod.GET)
 	public ResponseEntity<List<Product>> getAllProductsByType(@PathVariable("productTypeCode") int productTypeCode) throws ProductCatalougeServiceException{
-		return new ResponseEntity<List<Product>>(productCatalougeService.getAllProductByType(productTypeCode), HttpStatus.OK);
+		productList = productCatalougeService.getAllProductByType(productTypeCode);
+		
+		return ((productList == null || productList.size() < 1 )
+				? new ResponseEntity<List<Product>>(HttpStatus.NOT_FOUND)
+				: new ResponseEntity<List<Product>>(productList, HttpStatus.OK));
 	}
 	
 	@RequestMapping(value="/products/product", method= RequestMethod.POST)
