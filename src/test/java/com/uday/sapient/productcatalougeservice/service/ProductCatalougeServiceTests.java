@@ -98,7 +98,7 @@ public class ProductCatalougeServiceTests {
 
 	@Test
 	public void deleteProduct() throws ProductCatalougeServiceException {
-		when(productCatalougeService.deleteProduct("C10010")).thenReturn(true);
+		//when(productCatalougeService.deleteProduct("C10010")).thenReturn(true);
 		
 
 	}
